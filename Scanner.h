@@ -16,22 +16,24 @@ typedef enum {
     WRITE,
     PLUS,
     MINUS,
-    MULTIPLY,
-    DIVIDE,
+    MULT,
+    DIV,
     EQUAL,
-    LESS_THAN,
-    LEFT_PARENTHESIS,
-    RIGHT_PARENTHESIS,
+    LESSTHAN,
+    OPENBRACKET,
+    CLOSEDBRACKET,
     SEMICOLON,
-    ASSIGNMENT,
+    ASSIGN,
     IDENTIFIER,
-    NUMBER
+    NUMBER,
+    ERROR
 } TokenType;
 
 typedef struct {
     TokenType tokenval;
     string stringval;
     int numval;
+    string errorMessage;
 } TokenRecord;
 
 class Scanner {
@@ -41,6 +43,7 @@ class Scanner {
         string GetTokensList();
     private:
         string code;
+        int indx;
 };
 
 
