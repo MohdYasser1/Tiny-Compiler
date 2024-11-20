@@ -1,0 +1,23 @@
+{
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "main.cpp",
+                "Scanner.cpp",
+                "-o",
+                "main",
+                "-g" // Ensure the -g flag is included to generate debug information
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Generated task for building the project."
+        }
+    ],
+    "version": "2.0.0"
+}

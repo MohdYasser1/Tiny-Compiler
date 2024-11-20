@@ -1,4 +1,4 @@
-#include <Scanner.h>
+#include "Scanner.h"
 
 Scanner::Scanner(const string code) {
     this->code = code;
@@ -10,7 +10,7 @@ TokenRecord Scanner::GetNextToken() {
 
     // STATE 0:
     // Skip whitespace and comments
-    while (indx < code.length() && (isspace(code[indx] || code[indx] == '{' || code[indx] == '\n'))) {
+    while (indx < code.length() && (isspace(code[indx]) || code[indx] == '{' || code[indx] == '\n')) {
         if (code[indx] == '{') {
             while (indx < code.length() && code[indx] != '}') {
                 indx++;
@@ -30,7 +30,7 @@ TokenRecord Scanner::GetNextToken() {
             end++;
             indx++;
         }
-        if (!isspace(code[indx])) {
+        if (isalpha(code[indx])) {
             token.tokenval = ERROR;
             token.errorMessage = "Invalid number format";
         }
@@ -127,7 +127,84 @@ TokenRecord Scanner::GetNextToken() {
     default:
         token.tokenval = ERROR;
         token.errorMessage = "Invalid symbol";
+        indx++;
         break;
     } 
     return token;
+}
+
+string Scanner::GetTokensList() {
+    string tokensList = "";
+    TokenRecord token;
+    do {
+        token = GetNextToken();
+        switch (token.tokenval) {
+        case IF:
+            tokensList += "if, IF\n";
+            break;
+        case THEN:
+            tokensList += "then, THEN\n";
+            break;
+        case ELSE:
+            tokensList += "else, ELSE\n";
+            break;
+        case END:
+            tokensList += "end, END\n";
+            break;
+        case REPEAT:
+            tokensList += "repeat, REPEAT\n";
+            break;
+        case UNTIL:
+            tokensList += "until, UNTIL\n";
+            break;
+        case READ:
+            tokensList += "read, READ\n";
+            break;
+        case WRITE:
+            tokensList += "write, WRITE\n";
+            break;
+        case PLUS:
+            tokensList += "+, PLUS\n";
+            break;
+        case MINUS:
+            tokensList += "-, MINUS\n";
+            break;
+        case MULT:
+            tokensList += "*, MULT\n";
+            break;
+        case DIV:
+            tokensList += "/, DIV\n";
+            break;
+        case EQUAL:
+            tokensList += "=, EQUAL\n";
+            break;
+        case LESSTHAN:
+            tokensList += "<, LESSTHAN\n";
+            break;
+        case OPENBRACKET:
+            tokensList += "(, OPENBRACKET\n";
+            break;
+        case CLOSEDBRACKET:
+            tokensList += "), CLOSEDBRACKET\n";
+            break;
+        case SEMICOLON:
+            tokensList += ";, SEMICOLON\n";
+            break;
+        case ASSIGN:
+            tokensList += ":=, ASSIGN\n";
+            break;
+        case IDENTIFIER:
+            tokensList += token.stringval + ", IDENTIFIER\n";
+            break;
+        case NUMBER:
+            tokensList += to_string(token.numval) + ", NUMBER\n";
+            break;
+        case ERROR:
+            tokensList += token.errorMessage + "\n";
+            break;
+        default:
+            break;
+        }
+    } while (indx < code.length());
+    return tokensList;
 }
