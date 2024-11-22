@@ -5,10 +5,10 @@
 
 using namespace std;
 
-typedef enum {
+typedef enum
+{
     IF,
     THEN,
-    ELSE,
     END,
     REPEAT,
     UNTIL,
@@ -29,22 +29,24 @@ typedef enum {
     ERROR
 } TokenType;
 
-typedef struct {
+typedef struct
+{
     TokenType tokenval;
     string stringval;
     int numval;
     string errorMessage;
 } TokenRecord;
 
-class Scanner {
-    public:
-        Scanner(string);
-        TokenRecord GetNextToken();
-        string GetTokensList();
-    private:
-        string code;
-        int indx;
-};
+class Scanner
+{
+public:
+    Scanner(string);
+    TokenRecord GetNextToken();
+    string GetTokensList();
 
+private:
+    string code;
+    int indx;
+};
 
 #endif // SCANNER_H

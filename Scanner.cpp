@@ -1,18 +1,23 @@
 #include "Scanner.h"
 
-Scanner::Scanner(const string code) {
+Scanner::Scanner(const string code)
+{
     this->code = code;
     this->indx = 0;
 }
 
-TokenRecord Scanner::GetNextToken() {
+TokenRecord Scanner::GetNextToken()
+{
     TokenRecord token;
 
     // STATE 0:
     // Skip whitespace and comments
-    while (indx < code.length() && (isspace(code[indx]) || code[indx] == '{' || code[indx] == '\n')) {
-        if (code[indx] == '{') {
-            while (indx < code.length() && code[indx] != '}') {
+    while (indx < code.length() && (isspace(code[indx]) || code[indx] == '{' || code[indx] == '\n'))
+    {
+        if (code[indx] == '{')
+        {
+            while (indx < code.length() && code[indx] != '}')
+            {
                 indx++;
             }
         }
@@ -21,51 +26,69 @@ TokenRecord Scanner::GetNextToken() {
 
     // STATE 1:
     // Check for numbers
-    if (isdigit(code[indx])) {
+    if (isdigit(code[indx]))
+    {
         token.tokenval = NUMBER;
         int start = indx;
-        int end = indx+1;
+        int end = indx + 1;
         indx++;
-        while (indx < code.length() && isdigit(code[indx])) {
+        while (indx < code.length() && isdigit(code[indx]))
+        {
             end++;
             indx++;
         }
-        if (isalpha(code[indx])) {
+        if (isalpha(code[indx]))
+        {
             token.tokenval = ERROR;
             token.errorMessage = "Invalid number format";
         }
-        token.numval = stoi(code.substr(start, end-start));
+        token.numval = stoi(code.substr(start, end - start));
         return token;
     }
 
     // STATE 2:
     // Check for identifiers and reserved words
-    if (isalpha(code[indx])) {
+    if (isalpha(code[indx]))
+    {
         int start = indx;
-        int end = indx+1;
+        int end = indx + 1;
         indx++;
-        while (indx < code.length() && isalnum(code[indx])) {
+        while (indx < code.length() && isalpha(code[indx]))
+        {
             end++;
             indx++;
         }
-        string ident = code.substr(start, end-start);
-        if (ident == "if") {
+        string ident = code.substr(start, end - start);
+        if (ident == "if")
+        {
             token.tokenval = IF;
-        } else if (ident == "then") {
+        }
+        else if (ident == "then")
+        {
             token.tokenval = THEN;
-        } else if (ident == "else") {
-            token.tokenval = ELSE;
-        } else if (ident == "end") {
+        }
+        else if (ident == "end")
+        {
             token.tokenval = END;
-        } else if (ident == "repeat") {
+        }
+        else if (ident == "repeat")
+        {
             token.tokenval = REPEAT;
-        } else if (ident == "until") {
+        }
+        else if (ident == "until")
+        {
             token.tokenval = UNTIL;
-        } else if (ident == "read") {
+        }
+        else if (ident == "read")
+        {
             token.tokenval = READ;
-        } else if (ident == "write") {
+        }
+        else if (ident == "write")
+        {
             token.tokenval = WRITE;
-        } else {
+        }
+        else
+        {
             token.tokenval = IDENTIFIER;
             token.stringval = ident;
         }
@@ -74,13 +97,16 @@ TokenRecord Scanner::GetNextToken() {
 
     // STATE 3:
     // Check for symbols
-    switch (code[indx]) 
+    switch (code[indx])
     {
     case ':':
-        if (code[indx+1] == '=') {
+        if (code[indx + 1] == '=')
+        {
             token.tokenval = ASSIGN;
             indx += 2;
-        } else {
+        }
+        else
+        {
             token.tokenval = ERROR;
             token.errorMessage = "Invalid symbol";
             indx++;
@@ -123,30 +149,30 @@ TokenRecord Scanner::GetNextToken() {
         token.tokenval = SEMICOLON;
         indx++;
         break;
-    
+
     default:
         token.tokenval = ERROR;
         token.errorMessage = "Invalid symbol";
         indx++;
         break;
-    } 
+    }
     return token;
 }
 
-string Scanner::GetTokensList() {
+string Scanner::GetTokensList()
+{
     string tokensList = "";
     TokenRecord token;
-    do {
+    do
+    {
         token = GetNextToken();
-        switch (token.tokenval) {
+        switch (token.tokenval)
+        {
         case IF:
             tokensList += "if, IF\n";
             break;
         case THEN:
             tokensList += "then, THEN\n";
-            break;
-        case ELSE:
-            tokensList += "else, ELSE\n";
             break;
         case END:
             tokensList += "end, END\n";
@@ -205,6 +231,6 @@ string Scanner::GetTokensList() {
         default:
             break;
         }
-    } while (indx < code.length());
+    } while (indx < code.length() && token.tokenval != ERROR);
     return tokensList;
 }
