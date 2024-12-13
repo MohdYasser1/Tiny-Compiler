@@ -24,6 +24,7 @@ private:
     int indx;
     Node* syntaxTree;
     TokenRecord getNextToken();
+    void match(TokenType);
     Node* program(Node*);
     Node* stmtSequence(Node*);
     Node* statement(Node*);

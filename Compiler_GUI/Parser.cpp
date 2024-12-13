@@ -5,6 +5,7 @@ Parser::Parser(string tokenList)
     this->tokenList = tokenList;
     this->indx = 0;
     initializeTokens();
+    this->currentToken = getNextToken();
 }
 
 void Parser::initializeTokens()
@@ -35,6 +36,7 @@ TokenRecord Parser::getNextToken()
     TokenRecord token;
     token.tokenval = ERROR;
     token.errorMessage = "No more tokens";
+    return token;
 }
 
 TokenRecord Parser::readToken(string value, string typeStr)
@@ -126,6 +128,14 @@ TokenRecord Parser::readToken(string value, string typeStr)
     return token;
 }
 
+void Parser::match(TokenType expected)
+{
+    if (currentToken.tokenval == expected)
+    {
+        currentToken = getNextToken();
+    }
+}
+
 Node* Parser::GetSyntaxTree()
 {
     /*
@@ -137,13 +147,55 @@ Node* Parser::GetSyntaxTree()
 
 Node* Parser::program(Node* node)
 {
-     stmtSequence(node);
+    return stmtSequence(node);
 }
 
 Node* Parser::stmtSequence(Node* node)
 {
-    statement(node);
+    Node* temp = statement(node);
+    while (currentToken.tokenval == SEMICOLON)
+    {
+        // newTemp = new Node(";");
+        match(SEMICOLON);
+        statement(temp->sibling);
+    }
+    return temp;
+}
+
+Node* Parser::statement(Node* node)
+{
     Node* temp;
-    Node* newTemp;
-    temp =
+    switch (currentToken.tokenval)
+    {
+    case IF:
+        temp = ifstmt(node);
+        break;
+    case REPEAT:
+        temp = repeatstmt(node);
+        break;
+    case IDENTIFIER:
+        temp = assignstmt(node);
+        break;
+    case READ:
+        temp = readstmt(node);
+        break;
+    case WRITE:
+        temp = writestmt(node);
+        break;
+    default:
+        break;
+    }
+    return temp;
+}
+
+Node* Parser::ifstmt(Node* node)
+{
+    match(IF);
+    Node* temp = new Node("if");
+    temp->type = "stmt";
+    exp(temp->leftChild);
+    match(THEN);
+    stmtSequence(temp->rightChild);
+    match(END);
+    return temp;
 }
