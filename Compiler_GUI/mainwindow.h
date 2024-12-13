@@ -59,10 +59,15 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene; // Scene for rendering the tree
-    //Node *rootNode;    // Root of the syntax tree
 
-    void drawTree(Node *node, QPointF position, qreal xOffset = 150); // Draw tree on the scene
-    void deleteTree(Node *node); // Clean up tree memory
+    // void drawTree(Node *node, QPointF position, qreal xOffset = 150); // Draw tree on the scene
+    // void deleteTree(Node *node); // Clean up tree memory
+
+
+
+    void drawTree(Node* root, QPointF startPos, qreal horizontalSpacing);
+    void calculateNodePositions(Node* node, int depth, int& xPosition, std::map<Node*, QPointF>& positions, qreal horizontalSpacing);
+    void drawTreeWithPrecomputedPositions(Node* node, const std::map<Node*, QPointF>& positions);
 };
 
 #endif // MAINWINDOW_H
