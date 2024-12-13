@@ -153,11 +153,13 @@ Node* Parser::program()
 Node* Parser::stmtSequence()
 {
     Node* temp = statement();
+    Node* newTemp = temp;
     while (currentToken.tokenval == SEMICOLON)
     {
         // newTemp = new Node(";");
         match(SEMICOLON);
-        temp->sibling = statement();
+        newTemp->sibling = statement();
+        newTemp = temp->sibling;
     }
     return temp;
 }
