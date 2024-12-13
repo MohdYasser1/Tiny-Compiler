@@ -159,7 +159,7 @@ Node* Parser::stmtSequence()
         // newTemp = new Node(";");
         match(SEMICOLON);
         newTemp->sibling = statement();
-        newTemp = temp->sibling;
+        newTemp = newTemp->sibling;
     }
     return temp;
 }
