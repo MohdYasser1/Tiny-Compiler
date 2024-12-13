@@ -1,0 +1,9 @@
+{ TINY Language Example }
+x := 10;
+y := 5;
+z := x + y; {assign z = x + y}
+if (z < 20) then
+    write(z)
+else
+    write(100)
+end;

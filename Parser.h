@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include "Node.h"
+#include <iostream>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ class Parser
 public:
     Parser(string);
     Node* GetSyntaxTree();
+    void PrintSyntaxTree(Node*, int);
 private:
     string tokenList;
     vector<TokenRecord> tokens;
@@ -24,21 +26,22 @@ private:
     int indx;
     Node* syntaxTree;
     TokenRecord getNextToken();
-    Node* program(Node*);
-    Node* stmtSequence(Node*);
-    Node* statement(Node*);
-    Node* ifstmt(Node*);
-    Node* repeatstmt(Node*);
-    Node* assignstmt(Node*);
-    Node* readstmt(Node*);
-    Node* writestmt(Node*);
-    Node* exp(Node*);
-    Node* comparisonop(Node*);
-    Node* simpleexp(Node*);
-    Node* addop(Node*);
-    Node* term(Node*);
-    Node* mulop(Node*);
-    Node* factor(Node*);
+    void match(TokenType);
+    Node* program();
+    Node* stmtSequence();
+    Node* statement();
+    Node* ifstmt();
+    Node* repeatstmt();
+    Node* assignstmt();
+    Node* readstmt();
+    Node* writestmt();
+    Node* exp();
+    Node* comparisonop();
+    Node* simpleexp();
+    Node* addop();
+    Node* term();
+    Node* mulop();
+    Node* factor();
 };
 
 #endif // PARSER_H
