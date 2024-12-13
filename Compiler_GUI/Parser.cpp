@@ -1,4 +1,4 @@
-// #include "Parser.h"
+#include "Parser.h"
 
 Parser::Parser(string tokenList)
 {
@@ -8,22 +8,22 @@ Parser::Parser(string tokenList)
     this->currentToken = getNextToken();
 }
 
-// void Parser::initializeTokens()
-// {
-//     // Get the next token from the token list
-//     // and return the token value
-//     istringstream iss(tokenList);
-//     string line;
-//     while(getline(iss, line))
-//     {
-//         istringstream lineStream(line);
-//         string value, typeStr;
-//         if(getline(lineStream, value, ',') && getline(lineStream, typeStr))
-//         {
-//             tokens.push_back(readToken(value, typeStr));
-//         }
-//     }
-// }
+void Parser::initializeTokens()
+{
+    // Get the next token from the token list
+    // and return the token value
+    istringstream iss(tokenList);
+    string line;
+    while(getline(iss, line))
+    {
+        istringstream lineStream(line);
+        string value, typeStr;
+        if(getline(lineStream, value, ',') && getline(lineStream, typeStr))
+        {
+            tokens.push_back(readToken(value, typeStr));
+        }
+    }
+}
 
 TokenRecord Parser::getNextToken()
 {

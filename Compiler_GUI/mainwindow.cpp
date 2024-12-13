@@ -96,71 +96,71 @@ void MainWindow::onParserButtonClicked()
     if (inputText.isEmpty()) {
         QMessageBox::warning(this, "Error", "Input text is empty. Please enter some text to parse.");
         return; // Don't proceed if input is empty
-    }/*
+    }
 
     Parser parser(inputText.toStdString());
     Node* rootNode = parser.GetSyntaxTree();  // Use rootNode to store the tree*/
 
     //test the draw tree
 
-    Node* rootNode = new Node("Root");
+    // Node* rootNode = new Node("Root");
 
-    // Level 1: Children of Root
-    Node* child1 = new Node("Child 1");
-    Node* child2 = new Node("Child 2");
-    Node* child3 = new Node("Child 3");
+    // // Level 1: Children of Root
+    // Node* child1 = new Node("Child 1");
+    // Node* child2 = new Node("Child 2");
+    // Node* child3 = new Node("Child 3");
 
-    Node* child25 = new Node("right");
-    Node* child35 = new Node("right");
+    // Node* child25 = new Node("right");
+    // Node* child35 = new Node("right");
 
-    // Add children to Root
-    rootNode->leftChild = child1;
-    rootNode->type = "stmt";
-    rootNode->rightChild = child2;
-    child2->sibling = child3;
+    // // Add children to Root
+    // rootNode->leftChild = child1;
+    // rootNode->type = "stmt";
+    // rootNode->rightChild = child2;
+    // child2->sibling = child3;
 
-    // Level 2: Children of Child 1
-    Node* child1_1 = new Node("Child 1.1");
-    Node* child1_2 = new Node("Child 1.2");
+    // // Level 2: Children of Child 1
+    // Node* child1_1 = new Node("Child 1.1");
+    // Node* child1_2 = new Node("Child 1.2");
 
-    // Add children to Child 1
-    child1->leftChild = child1_1;
-    child1->rightChild = child25;
-    child1->leftChild-> type = "stmt";
-    child1_1->sibling = child1_2;
+    // // Add children to Child 1
+    // child1->leftChild = child1_1;
+    // child1->rightChild = child25;
+    // child1->leftChild-> type = "stmt";
+    // child1_1->sibling = child1_2;
 
-    // Level 2: Children of Child 2
-    Node* child2_1 = new Node("Child 2.1");
-    Node* child2_2 = new Node("Child 2.2");
-    Node* child36 = new Node("right 5");
+    // // Level 2: Children of Child 2
+    // Node* child2_1 = new Node("Child 2.1");
+    // Node* child2_2 = new Node("Child 2.2");
+    // Node* child36 = new Node("right 5");
 
-    // Add children to Child 2
-    child2->leftChild = child2_1;
-    child2->rightChild = child36;
-    child2_1->sibling = child2_2;
+    // // Add children to Child 2
+    // child2->leftChild = child2_1;
+    // child2->rightChild = child36;
+    // child2_1->sibling = child2_2;
 
-    // Level 3: Children of Child 1.1
-    Node* child1_1_1 = new Node("Child 1.1.1");
-    Node* child1_1_2 = new Node("Child 1.1.2");
+    // // Level 3: Children of Child 1.1
+    // Node* child1_1_1 = new Node("Child 1.1.1");
+    // Node* child1_1_2 = new Node("Child 1.1.2");
 
-    // Add children to Child 1.1
-    child1_1->leftChild = child1_1_1;
-    child1_1->rightChild = child35;
-    child1_1_1->sibling = child1_1_2;
+    // // Add children to Child 1.1
+    // child1_1->leftChild = child1_1_1;
+    // child1_1->rightChild = child35;
+    // child1_1_1->sibling = child1_1_2;
 
-    // Level 3: Children of Child 2.1
-    Node* child2_1_1 = new Node("Child 2.1.1");
+    // // Level 3: Children of Child 2.1
+    // Node* child2_1_1 = new Node("Child 2.1.1");
 
-    // Add a child to Child 2.1
-    child2_1->leftChild = child2_1_1;
+    // // Add a child to Child 2.1
+    // child2_1->leftChild = child2_1_1;
 
-    // Level 3: Sibling of Child 3
-    Node* child3_1 = new Node("Child 3.1");
-    Node* child3_2 = new Node("Child 3.2");
+    // // Level 3: Sibling of Child 3
+    // Node* child3_1 = new Node("Child 3.1");
+    // Node* child3_2 = new Node("Child 3.2");
 
-    // Add children to Child 3
-    child3->leftChild = child3_1;
-    child3_1->sibling = child3_2;
+    // // Add children to Child 3
+    // child3->leftChild = child3_1;
+    // child3_1->sibling = child3_2;
 
     // The tree now has greater depth and width for testing
 
