@@ -87,3 +87,39 @@ void MainWindow::onParserButtonClicked()
 
 
 }
+
+// void MainWindow::drawTree(Node* node, QPointF position, qreal xOffset)
+// {
+//     if (!node) return;
+
+//     // Draw the current node
+//     QGraphicsItem* nodeItem;
+//     if (node->type == "stmt") {
+//         nodeItem = scene->addRect(position.x(), position.y(), 100, 40);
+//     } else {  // type == "exp"
+//         nodeItem = scene->addEllipse(position.x(), position.y(), 80, 40);
+//     }
+//     scene->addText(node->value)->setPos(position.x() + 10, position.y() + 5);
+
+//     // Draw the leftChild
+//     if (node->leftChild) {
+//         QPointF childPos = position + QPointF(-xOffset, 100);
+//         scene->addLine(position.x() + 50, position.y() + 40, childPos.x() + 50, childPos.y());
+//         drawTree(node->leftChild, childPos, xOffset / 1.5);
+//     }
+
+//     // Draw the rightChild
+//     if (node->rightChild) {
+//         QPointF childPos = position + QPointF(xOffset, 100);
+//         scene->addLine(position.x() + 50, position.y() + 40, childPos.x() + 50, childPos.y());
+//         drawTree(node->rightChild, childPos, xOffset / 1.5);
+//     }
+
+//     // Draw siblings
+//     if (node->sibling) {
+//         QPointF siblingPos = position + QPointF(xOffset, 0);
+//         scene->addLine(position.x() + 100, position.y() + 20, siblingPos.x(), siblingPos.y() + 20);
+//         drawTree(node->sibling, siblingPos, xOffset);
+//     }
+// }
+
