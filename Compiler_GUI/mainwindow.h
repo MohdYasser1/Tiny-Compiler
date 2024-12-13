@@ -30,6 +30,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Node.h"
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -37,11 +38,6 @@
 #include <QPointF>
 #include <vector>
 
-// TreeNode structure
-struct TreeNode {
-    QString label;
-    std::vector<TreeNode *> children;
-};
 
 namespace Ui {
 class MainWindow;
@@ -63,11 +59,10 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene; // Scene for rendering the tree
-    TreeNode *rootNode;    // Root of the syntax tree
+    //Node *rootNode;    // Root of the syntax tree
 
-    TreeNode* parseInput(const QString &input); // Method to build the syntax tree
-    void drawTree(TreeNode *node, QPointF position, qreal xOffset = 150); // Draw tree on the scene
-    void deleteTree(TreeNode *node); // Clean up tree memory
+    void drawTree(Node *node, QPointF position, qreal xOffset = 150); // Draw tree on the scene
+    void deleteTree(Node *node); // Clean up tree memory
 };
 
 #endif // MAINWINDOW_H
