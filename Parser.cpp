@@ -24,15 +24,17 @@ void Parser::initializeTokens()
     }
 }
 
-string Parser::getNextToken()
+TokenRecord Parser::getNextToken()
 {
     if(indx < tokens.size())
     {
         TokenRecord token = tokens[indx];
         indx++;
-        return token.stringval;
+        return token;
     }
-    return "";
+    TokenRecord token;
+    token.tokenval = ERROR;
+    token.errorMessage = "No more tokens";
 }
 
 TokenRecord Parser::readToken(string value, string typeStr)
@@ -124,7 +126,24 @@ TokenRecord Parser::readToken(string value, string typeStr)
     return token;
 }
 
-Node* Parser::GetParseTree()
+Node* Parser::GetSyntaxTree()
 {
-    
+    /*
+        A methid that generates the syntax tree
+        returns the root node of the syntax tree
+    */
+    return program(syntaxTree);
+}
+
+Node* Parser::program(Node* node)
+{
+    stmtSequence(node);
+}
+
+Node* Parser::stmtSequence(Node* node)
+{
+    statement(node);
+    Node* temp;
+    Node* newTemp;
+    temp = 
 }

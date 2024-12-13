@@ -12,13 +12,17 @@ class Node
 {
 public:
     string value;
-    Node *left;
-    Node *right;
+    string type;
+    Node* sibling;
+    Node* leftChild;
+    Node* rightChild;
     Node(string value)
     {
         this->value = value;
-        this->left = NULL;
-        this->right = NULL;
+        this->type = "";
+        this->sibling = NULL;
+        this->leftChild = NULL;
+        this->rightChild = NULL;
     }
 };
 
@@ -26,8 +30,7 @@ class Parser
 {
 public:
     Parser(string);
-    void Parse();
-    Node* GetParseTree();
+    Node* GetSyntaxTree();
 private:
     string tokenList;
     vector<TokenRecord> tokens;
@@ -35,8 +38,23 @@ private:
     void initializeTokens();
     TokenRecord readToken(string value, string typeStr);
     int indx;
-    Node* parseTree;
-    string getNextToken();
+    Node* syntaxTree;
+    TokenRecord getNextToken();
+    Node* program(Node*);
+    Node* stmtSequence(Node*);
+    Node* statement(Node*);
+    Node* ifstmt(Node*);
+    Node* repeatstmt(Node*);
+    Node* assignstmt(Node*);
+    Node* readstmt(Node*);
+    Node* writestmt(Node*);
+    Node* exp(Node*);
+    Node* comparisonop(Node*);
+    Node* simpleexp(Node*);
+    Node* addop(Node*);
+    Node* term(Node*);
+    Node* mulop(Node*);
+    Node* factor(Node*);
 };
 
 #endif // PARSER_H
