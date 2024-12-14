@@ -87,6 +87,10 @@ TokenRecord Scanner::GetNextToken()
         {
             token.tokenval = WRITE;
         }
+        else if (ident == "else")
+        {
+            token.tokenval = ELSE;
+        }
         else
         {
             token.tokenval = IDENTIFIER;
@@ -224,6 +228,9 @@ string Scanner::GetTokensList()
             break;
         case NUMBER:
             tokensList += to_string(token.numval) + ", NUMBER\n";
+            break;
+        case ELSE:
+            tokensList += "else, ELSE\n";
             break;
         case ERROR:
             tokensList += token.errorMessage + "\n";

@@ -26,6 +26,7 @@ typedef enum
     ASSIGN,
     IDENTIFIER,
     NUMBER,
+    ELSE,
     ERROR
 } TokenType;
 
