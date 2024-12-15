@@ -45,6 +45,7 @@ private:
     Node* factor();
     bool Error;
     string errorMessage;
+    string tokenTypeToString(TokenType type);
 };
 
 #endif // PARSER_H

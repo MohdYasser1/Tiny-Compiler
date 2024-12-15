@@ -153,7 +153,7 @@ void Parser::match(TokenType expected)
     else
     {
         Error = true;
-        errorMessage = "Error: Expected " + to_string(expected) + " but found " + to_string(currentToken.tokenval);
+        errorMessage = "Error: Expected " + tokenTypeToString(expected) + " but found " + tokenTypeToString(currentToken.tokenval);
     }
 }
 
@@ -212,7 +212,7 @@ Node* Parser::statement()
         break;
     default:
         Error = true;
-        errorMessage = "Error: Expected statement but found " + to_string(currentToken.tokenval);
+        errorMessage = "Error: Expected statement but found " + tokenTypeToString(currentToken.tokenval);
         break;
     }
     return temp;
@@ -304,7 +304,7 @@ Node* Parser::comparisonop()
         break;
     default:
         Error = true;
-        errorMessage = "Error: Expected comparison operator but found " + to_string(currentToken.tokenval);
+        errorMessage = "Error: Expected comparison operator but found " + tokenTypeToString(currentToken.tokenval);
         break;
     }
     return temp;
@@ -340,7 +340,7 @@ Node* Parser::addop()
         break;
     default:
         Error = true;
-        errorMessage = "Error: Expected add/minus operator but found " + to_string(currentToken.tokenval);
+        errorMessage = "Error: Expected add/minus operator but found " + tokenTypeToString(currentToken.tokenval);
         break;
     }
     return temp;
@@ -376,7 +376,7 @@ Node* Parser::mulop()
         break;
     default:
         Error = true;
-        errorMessage = "Error: Expected mult/div operator but found " + to_string(currentToken.tokenval);
+        errorMessage = "Error: Expected mult/div operator but found " + tokenTypeToString(currentToken.tokenval);
         break;
     }
     return temp;
@@ -404,7 +404,7 @@ Node* Parser::factor()
         break;
     default:
         Error = true;
-        errorMessage = "Error: Expected factor but found " + to_string(currentToken.tokenval);
+        errorMessage = "Error: Expected factor but found " + tokenTypeToString(currentToken.tokenval);
         break;
     }
     return temp;
@@ -425,4 +425,31 @@ void Parser::PrintSyntaxTree(Node* root, int level)
     PrintSyntaxTree(root->rightChild, level+1);
     PrintSyntaxTree(root->optional, level);
     PrintSyntaxTree(root->sibling, level);
+}
+
+string Parser::tokenTypeToString(TokenType type) {
+    switch (type) {
+        case IF: return "IF";
+        case THEN: return "THEN";
+        case ELSE: return "ELSE";
+        case END: return "END";
+        case REPEAT: return "REPEAT";
+        case UNTIL: return "UNTIL";
+        case READ: return "READ";
+        case WRITE: return "WRITE";
+        case PLUS: return "PLUS";
+        case MINUS: return "MINUS";
+        case MULT: return "MULT";
+        case DIV: return "DIV";
+        case EQUAL: return "EQUAL";
+        case LESSTHAN: return "LESSTHAN";
+        case OPENBRACKET: return "OPENBRACKET";
+        case CLOSEDBRACKET: return "CLOSEDBRACKET";
+        case SEMICOLON: return "SEMICOLON";
+        case ASSIGN: return "ASSIGN";
+        case IDENTIFIER: return "IDENTIFIER";
+        case NUMBER: return "NUMBER";
+        case ERROR: return "ERROR";
+        default: return "UNKNOWN";
+    }
 }
