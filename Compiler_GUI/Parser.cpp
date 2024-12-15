@@ -388,5 +388,5 @@ void Parser::PrintSyntaxTree(Node* root, int level)
     PrintSyntaxTree(root->leftChild, level+1);
     PrintSyntaxTree(root->rightChild, level+1);
     PrintSyntaxTree(root->sibling, level);
-    // PrintSyntaxTree(root->optional, level);
+    PrintSyntaxTree(root->optional, level);
 }
