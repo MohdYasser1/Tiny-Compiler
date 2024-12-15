@@ -120,10 +120,6 @@ TokenRecord Parser::readToken(string value, string typeStr)
         token.tokenval = NUMBER;
         token.numval = stoi(value);
     }
-    else if (typeStr == " ELSE")
-    {
-        token.tokenval = ELSE;
-    }
     else if (typeStr == " ERROR")
     {
         token.tokenval = ERROR;
@@ -202,11 +198,6 @@ Node* Parser::ifstmt()
     temp->leftChild = exp();
     match(THEN);
     temp->rightChild = stmtSequence();
-    if (currentToken.tokenval == ELSE)
-    {
-        match(ELSE);
-        temp->optional = stmtSequence();
-    }
     match(END);
     return temp;
 }
