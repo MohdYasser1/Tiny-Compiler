@@ -166,7 +166,7 @@ Node* Parser::stmtSequence()
 
 Node* Parser::statement()
 {
-    Node* temp;
+    Node* temp =NULL;
     switch (currentToken.tokenval)
     {
     case IF:
@@ -201,7 +201,7 @@ Node* Parser::ifstmt()
     if (currentToken.tokenval == ELSE)
     {
         match(ELSE);
-        // temp->optional = stmtSequence();
+        temp->optional = stmtSequence();
     }
     match(END);
     return temp;
@@ -329,7 +329,7 @@ Node* Parser::term()
 
 Node* Parser::mulop()
 {
-    Node* temp;
+    Node* temp= NULL;
     switch (currentToken.tokenval)
     {
     case MULT:
