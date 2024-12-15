@@ -154,80 +154,177 @@ void MainWindow::onParserButtonClicked()
  }
 
 
-void MainWindow::calculateNodePositions(Node* node, int depth, int& xPosition, std::map<Node*, QPointF>& positions, qreal horizontalSpacing) {
-    if (!node) return;
+ void MainWindow::calculateNodePositions(Node* node, int depth, int& xPosition, std::map<Node*, QPointF>& positions, qreal horizontalSpacing) {
+     if (!node) return;
 
-    // Left child: Traverse first (DFS)
-    calculateNodePositions(node->leftChild, depth + 1, xPosition, positions, horizontalSpacing);
+     // Left child: Traverse first (DFS)
+     calculateNodePositions(node->leftChild, depth + 1, xPosition, positions, horizontalSpacing);
 
-    // Assign position for the current node
-    positions[node] = QPointF(xPosition * horizontalSpacing, depth * 100.0);
-    xPosition++; // Move to the next horizontal position
+     // Assign position for the current node
+     positions[node] = QPointF(xPosition * horizontalSpacing, depth * 100.0);
+     xPosition++; // Move to the next horizontal position
 
-    // Right child: Traverse next
-    calculateNodePositions(node->rightChild, depth + 1, xPosition, positions, horizontalSpacing);
+     // Right child: Traverse next
+     calculateNodePositions(node->rightChild, depth + 1, xPosition, positions, horizontalSpacing);
 
-    // Sibling: Traverse last
-    calculateNodePositions(node->sibling, depth, xPosition, positions, horizontalSpacing);
+     // Optional child: Traverse after right child
 
-}
-
-void MainWindow::drawTreeWithPrecomputedPositions(Node* node, const std::map<Node*, QPointF>& positions) {
-    if (!node) return;
-
-    QPointF currentPos = positions.at(node);
-
-    // Calculate dynamic size based on text
-    QString text = QString::fromStdString(node->value);
-    QFont largeFont("Arial", 14);  // You can adjust the font size here
-    QFontMetrics metrics(largeFont);
-    int textWidth = metrics.horizontalAdvance(text) + 20;  // Add padding
-    int textHeight = metrics.height() + 10;
-
-    // Adjust ellipse size based on text
-    qreal nodeWidth = qMax(120.0, static_cast<qreal>(textWidth));  // Minimum width
-    qreal nodeHeight = qMax(60.0, static_cast<qreal>(textHeight)); // Minimum height
-
-    // Conditional check to determine whether to draw a rectangle or ellipse
-    if (node->type == "stmt") {
-        // Draw a rectangle if node->type == "stmt"
-        QGraphicsRectItem* nodeItem = scene->addRect(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
-        QGraphicsTextItem* textItem = scene->addText(text);
-        textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
-        textItem->setFont(largeFont);  // Set the larger font
-    } else {
-        // Draw an ellipse for other types
-        QGraphicsEllipseItem* nodeItem = scene->addEllipse(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
-        QGraphicsTextItem* textItem = scene->addText(text);
-        textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
-        textItem->setFont(largeFont);  // Set the larger font
-    }
+     calculateNodePositions(node->optional, depth + 1, xPosition, positions, horizontalSpacing);
 
 
-    // Draw line to left child
-    if (node->leftChild) {
-        QPointF childPos = positions.at(node->leftChild);
-        scene->addLine(currentPos.x() + nodeWidth / 2, currentPos.y() + nodeHeight,
-                       childPos.x() + nodeWidth / 2, childPos.y(), QPen(Qt::white));
-        drawTreeWithPrecomputedPositions(node->leftChild, positions);
-    }
+     // Sibling: Traverse last
+     calculateNodePositions(node->sibling, depth, xPosition, positions, horizontalSpacing);
 
-    // Draw line to sibling
-    if (node->sibling) {
-        QPointF siblingPos = positions.at(node->sibling);
-        scene->addLine(currentPos.x() + nodeWidth, currentPos.y() + nodeHeight / 2,
-                       siblingPos.x(), siblingPos.y() + nodeHeight / 2, QPen(Qt::white));
-        drawTreeWithPrecomputedPositions(node->sibling, positions);
-    }
+ }
 
-    // Draw line to right child
-    if (node->rightChild) {
-        QPointF childPos = positions.at(node->rightChild);
-        scene->addLine(currentPos.x() + nodeWidth / 2, currentPos.y() + nodeHeight,
-                       childPos.x() + nodeWidth / 2, childPos.y(), QPen(Qt::white));
-        drawTreeWithPrecomputedPositions(node->rightChild, positions);
-    }
-}
+
+
+ void MainWindow::drawTreeWithPrecomputedPositions(Node* node, const std::map<Node*, QPointF>& positions) {
+     if (!node) return;
+
+     QPointF currentPos = positions.at(node);
+
+     // Calculate dynamic size based on text
+     QString text = QString::fromStdString(node->value);
+     QFont largeFont("Arial", 14);  // You can adjust the font size here
+     QFontMetrics metrics(largeFont);
+     int textWidth = metrics.horizontalAdvance(text) + 20;  // Add padding
+     int textHeight = metrics.height() + 10;
+
+     // Adjust ellipse size based on text
+     qreal nodeWidth = qMax(120.0, static_cast<qreal>(textWidth));  // Minimum width
+     qreal nodeHeight = qMax(60.0, static_cast<qreal>(textHeight)); // Minimum height
+
+     // Conditional check to determine whether to draw a rectangle or ellipse
+     if (node->type == "stmt") {
+         // Draw a rectangle if node->type == "stmt"
+         QGraphicsRectItem* nodeItem = scene->addRect(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
+         QGraphicsTextItem* textItem = scene->addText(text);
+         textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
+         textItem->setFont(largeFont);  // Set the larger font
+     } else {
+         // Draw an ellipse for other types
+         QGraphicsEllipseItem* nodeItem = scene->addEllipse(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
+         QGraphicsTextItem* textItem = scene->addText(text);
+         textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
+         textItem->setFont(largeFont);  // Set the larger font
+     }
+
+
+     // Draw line to left child
+     if (node->leftChild) {
+         QPointF childPos = positions.at(node->leftChild);
+         scene->addLine(currentPos.x() + nodeWidth / 2, currentPos.y() + nodeHeight,
+                        childPos.x() + nodeWidth / 2, childPos.y(), QPen(Qt::white));
+         drawTreeWithPrecomputedPositions(node->leftChild, positions);
+     }
+
+     // Draw line to sibling
+     if (node->sibling) {
+         QPointF siblingPos = positions.at(node->sibling);
+         scene->addLine(currentPos.x() + nodeWidth, currentPos.y() + nodeHeight / 2,
+                        siblingPos.x(), siblingPos.y() + nodeHeight / 2, QPen(Qt::white));
+         drawTreeWithPrecomputedPositions(node->sibling, positions);
+     }
+
+     // Draw line to optional child (with dashed style)
+     if (node->optional) {
+         QPointF optionalPos = positions.at(node->optional);
+         QPen dashedPen(Qt::white);
+         dashedPen.setStyle(Qt::DashLine);
+         scene->addLine(currentPos.x() + nodeWidth / 2, currentPos.y() + nodeHeight,
+                        optionalPos.x() + nodeWidth / 2, optionalPos.y(), dashedPen);
+         drawTreeWithPrecomputedPositions(node->optional, positions);
+     }
+
+
+     // Draw line to right child
+     if (node->rightChild) {
+         QPointF childPos = positions.at(node->rightChild);
+         scene->addLine(currentPos.x() + nodeWidth / 2, currentPos.y() + nodeHeight,
+                        childPos.x() + nodeWidth / 2, childPos.y(), QPen(Qt::white));
+         drawTreeWithPrecomputedPositions(node->rightChild, positions);
+     }
+
+
+
+ }
+
+
+// void MainWindow::calculateNodePositions(Node* node, int depth, int& xPosition, std::map<Node*, QPointF>& positions, qreal horizontalSpacing) {
+//     if (!node) return;
+
+//     // Left child: Traverse first (DFS)
+//     calculateNodePositions(node->leftChild, depth + 1, xPosition, positions, horizontalSpacing);
+
+//     // Assign position for the current node
+//     positions[node] = QPointF(xPosition * horizontalSpacing, depth * 100.0);
+//     xPosition++; // Move to the next horizontal position
+
+//     // Right child: Traverse next
+//     calculateNodePositions(node->rightChild, depth + 1, xPosition, positions, horizontalSpacing);
+
+//     // Sibling: Traverse last
+//     calculateNodePositions(node->sibling, depth, xPosition, positions, horizontalSpacing);
+
+// }
+
+// void MainWindow::drawTreeWithPrecomputedPositions(Node* node, const std::map<Node*, QPointF>& positions) {
+//     if (!node) return;
+
+//     QPointF currentPos = positions.at(node);
+
+//     // Calculate dynamic size based on text
+//     QString text = QString::fromStdString(node->value);
+//     QFont largeFont("Arial", 14);  // You can adjust the font size here
+//     QFontMetrics metrics(largeFont);
+//     int textWidth = metrics.horizontalAdvance(text) + 20;  // Add padding
+//     int textHeight = metrics.height() + 10;
+
+//     // Adjust ellipse size based on text
+//     qreal nodeWidth = qMax(120.0, static_cast<qreal>(textWidth));  // Minimum width
+//     qreal nodeHeight = qMax(60.0, static_cast<qreal>(textHeight)); // Minimum height
+
+//     // Conditional check to determine whether to draw a rectangle or ellipse
+//     if (node->type == "stmt") {
+//         // Draw a rectangle if node->type == "stmt"
+//         QGraphicsRectItem* nodeItem = scene->addRect(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
+//         QGraphicsTextItem* textItem = scene->addText(text);
+//         textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
+//         textItem->setFont(largeFont);  // Set the larger font
+//     } else {
+//         // Draw an ellipse for other types
+//         QGraphicsEllipseItem* nodeItem = scene->addEllipse(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
+//         QGraphicsTextItem* textItem = scene->addText(text);
+//         textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
+//         textItem->setFont(largeFont);  // Set the larger font
+//     }
+
+
+//     // Draw line to left child
+//     if (node->leftChild) {
+//         QPointF childPos = positions.at(node->leftChild);
+//         scene->addLine(currentPos.x() + nodeWidth / 2, currentPos.y() + nodeHeight,
+//                        childPos.x() + nodeWidth / 2, childPos.y(), QPen(Qt::white));
+//         drawTreeWithPrecomputedPositions(node->leftChild, positions);
+//     }
+
+//     // Draw line to sibling
+//     if (node->sibling) {
+//         QPointF siblingPos = positions.at(node->sibling);
+//         scene->addLine(currentPos.x() + nodeWidth, currentPos.y() + nodeHeight / 2,
+//                        siblingPos.x(), siblingPos.y() + nodeHeight / 2, QPen(Qt::white));
+//         drawTreeWithPrecomputedPositions(node->sibling, positions);
+//     }
+
+//     // Draw line to right child
+//     if (node->rightChild) {
+//         QPointF childPos = positions.at(node->rightChild);
+//         scene->addLine(currentPos.x() + nodeWidth / 2, currentPos.y() + nodeHeight,
+//                        childPos.x() + nodeWidth / 2, childPos.y(), QPen(Qt::white));
+//         drawTreeWithPrecomputedPositions(node->rightChild, positions);
+//     }
+// }
 
 void MainWindow::drawTree(Node* root, QPointF startPos, qreal horizontalSpacing) {
     if (!root) return;

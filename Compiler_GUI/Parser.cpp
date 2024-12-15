@@ -170,7 +170,7 @@ Node* Parser::stmtSequence()
 
 Node* Parser::statement()
 {
-    Node* temp;
+    Node* temp = NULL;
     switch (currentToken.tokenval)
     {
     case IF:
@@ -265,7 +265,7 @@ Node* Parser::exp()
 
 Node* Parser::comparisonop()
 {
-    Node* temp;
+    Node* temp=NULL;
     switch (currentToken.tokenval)
     {
     case LESSTHAN:
@@ -299,7 +299,7 @@ Node* Parser::simpleexp()
 
 Node* Parser::addop()
 {
-    Node* temp;
+    Node* temp = NULL;
     switch (currentToken.tokenval)
     {
     case PLUS:
@@ -333,7 +333,7 @@ Node* Parser::term()
 
 Node* Parser::mulop()
 {
-    Node* temp;
+    Node* temp= NULL;
     switch (currentToken.tokenval)
     {
     case MULT:
@@ -354,7 +354,7 @@ Node* Parser::mulop()
 
 Node* Parser::factor()
 {
-    Node* temp;
+    Node* temp=NULL;
     switch (currentToken.tokenval)
     {
     case OPENBRACKET:
