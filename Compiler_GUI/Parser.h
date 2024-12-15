@@ -17,6 +17,7 @@ public:
     Parser(string);
     Node* GetSyntaxTree();
     void PrintSyntaxTree(Node*, int);
+    string GetErrorMessage();
 private:
     string tokenList;
     vector<TokenRecord> tokens;
@@ -42,6 +43,8 @@ private:
     Node* term();
     Node* mulop();
     Node* factor();
+    bool Error;
+    string errorMessage;
 };
 
 #endif // PARSER_H

@@ -6,6 +6,8 @@ Parser::Parser(string tokenList)
     this->indx = 0;
     initializeTokens();
     this->currentToken = getNextToken();
+    this->Error = false;
+    this->errorMessage = "";
 }
 
 void Parser::initializeTokens()
@@ -23,6 +25,11 @@ void Parser::initializeTokens()
             tokens.push_back(readToken(value, typeStr));
         }
     }
+}
+
+string Parser::GetErrorMessage()
+{
+    return errorMessage;
 }
 
 TokenRecord Parser::getNextToken()
@@ -126,8 +133,8 @@ TokenRecord Parser::readToken(string value, string typeStr)
     }
     else if (typeStr == " ERROR")
     {
-        token.tokenval = ERROR;
-        token.errorMessage = value;
+        this->Error = true;
+        this->errorMessage = "Error: " + value;
     }
     return token;
 }
@@ -138,6 +145,11 @@ void Parser::match(TokenType expected)
     {
         currentToken = getNextToken();
     }
+    else
+    {
+        Error = true;
+        errorMessage = "Error: Expected " + to_string(expected) + " but found " + to_string(currentToken.tokenval);
+    }
 }
 
 Node* Parser::GetSyntaxTree()
@@ -146,6 +158,11 @@ Node* Parser::GetSyntaxTree()
         A methid that generates the syntax tree
         returns the root node of the syntax tree
     */
+   Node* root = program();
+   if (Error){
+    return NULL;
+   }
+   else
     return program();
 }
 
@@ -189,6 +206,8 @@ Node* Parser::statement()
         temp = writestmt();
         break;
     default:
+        Error = true;
+        errorMessage = "Error: Expected statement but found " + to_string(currentToken.tokenval);
         break;
     }
     return temp;
@@ -279,6 +298,8 @@ Node* Parser::comparisonop()
         match(EQUAL);
         break;
     default:
+        Error = true;
+        errorMessage = "Error: Expected comparison operator but found " + to_string(currentToken.tokenval);
         break;
     }
     return temp;
@@ -313,6 +334,8 @@ Node* Parser::addop()
         match(MINUS);
         break;
     default:
+        Error = true;
+        errorMessage = "Error: Expected add/minus operator but found " + to_string(currentToken.tokenval);
         break;
     }
     return temp;
@@ -347,6 +370,8 @@ Node* Parser::mulop()
         match(DIV);
         break;
     default:
+        Error = true;
+        errorMessage = "Error: Expected mult/div operator but found " + to_string(currentToken.tokenval);
         break;
     }
     return temp;
@@ -373,6 +398,8 @@ Node* Parser::factor()
         match(IDENTIFIER);
         break;
     default:
+        Error = true;
+        errorMessage = "Error: Expected factor but found " + to_string(currentToken.tokenval);
         break;
     }
     return temp;
