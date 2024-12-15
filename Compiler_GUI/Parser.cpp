@@ -34,15 +34,16 @@ string Parser::GetErrorMessage()
 
 TokenRecord Parser::getNextToken()
 {
-    if(indx < tokens.size()+1)
+    if(indx < tokens.size())
     {
         TokenRecord token = tokens[indx];
         indx++;
         return token;
     }
     TokenRecord token;
-    this->Error = true;
-    this->errorMessage = "Code incomplete";
+    token.tokenval = ENDOFFILE;
+    return token;
+
 }
 
 TokenRecord Parser::readToken(string value, string typeStr)
@@ -144,6 +145,11 @@ void Parser::match(TokenType expected)
     {
         currentToken = getNextToken();
     }
+    else if (currentToken.tokenval == ENDOFFILE)
+    {
+        // Do nothing
+    }
+    
     else
     {
         Error = true;
@@ -162,7 +168,7 @@ Node* Parser::GetSyntaxTree()
     return NULL;
    }
    else
-    return program();
+    return root;
 }
 
 Node* Parser::program()
@@ -205,11 +211,9 @@ Node* Parser::statement()
         temp = writestmt();
         break;
     default:
-        if (!Error){
-            Error = true;
-            errorMessage = "Error: Expected statement but found " + to_string(currentToken.tokenval);
-            break;
-        }
+        Error = true;
+        errorMessage = "Error: Expected statement but found " + to_string(currentToken.tokenval);
+        break;
     }
     return temp;
 }

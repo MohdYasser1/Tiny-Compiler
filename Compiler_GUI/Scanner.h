@@ -27,7 +27,8 @@ typedef enum
     IDENTIFIER,
     NUMBER,
     ELSE,
-    ERROR
+    ERROR,
+    ENDOFFILE
 } TokenType;
 
 typedef struct
