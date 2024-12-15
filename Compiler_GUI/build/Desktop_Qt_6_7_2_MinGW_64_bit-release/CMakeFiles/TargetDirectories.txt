@@ -1,0 +1,9 @@
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/Compiler_GUI.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/edit_cache.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/rebuild_cache.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/list_install_components.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/install.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/install/local.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/install/strip.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/Compiler_GUI_autogen_timestamp_deps.dir
+C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/CMakeFiles/Compiler_GUI_autogen.dir

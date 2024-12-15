@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-fa306c16c393ece7b3c4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Compiler_GUI",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Compiler_GUI::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Compiler_GUI-Release-cd17dc8d1240c4daa50a.json",
+					"name" : "Compiler_GUI",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Compiler_GUI_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Compiler_GUI_autogen-Release-78e5af6499ea1a30a14e.json",
+					"name" : "Compiler_GUI_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Compiler_GUI_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Compiler_GUI_autogen_timestamp_deps-Release-1383b87e50f64be92f2d.json",
+					"name" : "Compiler_GUI_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release",
+		"source" : "C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

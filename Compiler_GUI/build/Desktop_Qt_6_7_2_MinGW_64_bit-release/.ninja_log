@@ -1,0 +1,12 @@
+# ninja log v6
+8	926	7560001744285918	Compiler_GUI_autogen/timestamp	1d982244d624a9c1
+8	926	7560001744285918	Compiler_GUI_autogen/mocs_compilation.cpp	1d982244d624a9c1
+8	926	7560001744285918	C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/Compiler_GUI_autogen/timestamp	1d982244d624a9c1
+8	926	7560001744285918	C:/Users/ahmed/OneDrive/Desktop/CSE 25/Senior 2/Compilers/Project/Github/Tiny-Compiler/Compiler_GUI/build/Desktop_Qt_6_7_2_MinGW_64_bit-release/Compiler_GUI_autogen/mocs_compilation.cpp	1d982244d624a9c1
+946	1733	7560001745358041	CMakeFiles/Compiler_GUI.dir/Scanner.cpp.obj	3d58f757470d65a5
+950	2388	7560001745412732	CMakeFiles/Compiler_GUI.dir/Parser.cpp.obj	2b9434980ce48de7
+936	3959	7560001745270487	CMakeFiles/Compiler_GUI.dir/main.cpp.obj	eb066e6fccce5fb
+955	3980	7560001745452743	CMakeFiles/Compiler_GUI.dir/TreeViewerWindow.cpp.obj	43774e5cdcb70377
+932	3993	7560001745230460	CMakeFiles/Compiler_GUI.dir/Compiler_GUI_autogen/mocs_compilation.cpp.obj	113749f92eb424a0
+941	5191	7560001745318034	CMakeFiles/Compiler_GUI.dir/mainwindow.cpp.obj	f65db843f613f65e
+5192	5455	7560001787824213	Compiler_GUI.exe	5f44d069750d5fb7
