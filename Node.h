@@ -14,6 +14,7 @@ public:
     Node* sibling;
     Node* leftChild;
     Node* rightChild;
+    Node* optional;
     Node(string value)
     {
         this->value = value;
@@ -21,6 +22,7 @@ public:
         this->sibling = NULL;
         this->leftChild = NULL;
         this->rightChild = NULL;
+        this->optional = NULL;
     }
 };
 
