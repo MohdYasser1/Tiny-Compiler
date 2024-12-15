@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QKeyEvent>
 
 class TreeViewerWindow : public QDialog
 {
@@ -13,7 +14,9 @@ class TreeViewerWindow : public QDialog
 public:
     explicit TreeViewerWindow(QWidget *parent = nullptr);
     void setScene(QGraphicsScene* scene);
-    //void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    // void zoomIn();
+    // void zoomOut();
 
 private:
     QGraphicsView *view;

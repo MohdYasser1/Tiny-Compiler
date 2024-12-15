@@ -56,6 +56,8 @@ private slots:
     void onScannerButtonClicked();
     void onParserButtonClicked();
 
+    void on_CompileButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene; // Scene for rendering the tree

@@ -82,10 +82,23 @@ void MainWindow::onScannerButtonClicked()
     string tokensList = scanner.GetTokensList();
     if (tokensList.empty()) {
         QMessageBox::warning(this, "Error", "No valid tokens found.");
+        return;
     }
 
-    ui->outputTextEdit->setPlainText(QString::fromStdString(tokensList));
+    // Check if the last line contains "invalid symbol"
+    QString tokensListQt = QString::fromStdString(tokensList);
+    // Display tokens list in the output text edit
+    ui->outputTextEdit->setPlainText(tokensListQt);
+
+    QStringList lines = tokensListQt.split("\n", Qt::SkipEmptyParts);
+    if (!lines.isEmpty() && lines.last().trimmed() == "Invalid symbol") {
+        QMessageBox::critical(this, "Error", "Invalid symbol detected in the input.");
+        return;
+    }
+
+
 }
+
 
 void MainWindow::onParserButtonClicked()
 {
@@ -94,76 +107,12 @@ void MainWindow::onParserButtonClicked()
     // Check if the input text is empty
     inputText = inputText.trimmed(); // Removes leading and trailing whitespaces
     if (inputText.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Input text is empty. Please enter some text to parse.");
+        QMessageBox::warning(this, "Error", "Input text is empty.");
         return; // Don't proceed if input is empty
     }
 
     Parser parser(inputText.toStdString());
     Node* rootNode = parser.GetSyntaxTree();  // Use rootNode to store the tree*/
-
-    //test the draw tree
-
-    // Node* rootNode = new Node("Root");
-
-    // // Level 1: Children of Root
-    // Node* child1 = new Node("Child 1");
-    // Node* child2 = new Node("Child 2");
-    // Node* child3 = new Node("Child 3");
-
-    // Node* child25 = new Node("right");
-    // Node* child35 = new Node("right");
-
-    // // Add children to Root
-    // rootNode->leftChild = child1;
-    // rootNode->type = "stmt";
-    // rootNode->rightChild = child2;
-    // child2->sibling = child3;
-
-    // // Level 2: Children of Child 1
-    // Node* child1_1 = new Node("Child 1.1");
-    // Node* child1_2 = new Node("Child 1.2");
-
-    // // Add children to Child 1
-    // child1->leftChild = child1_1;
-    // child1->rightChild = child25;
-    // child1->leftChild-> type = "stmt";
-    // child1_1->sibling = child1_2;
-
-    // // Level 2: Children of Child 2
-    // Node* child2_1 = new Node("Child 2.1");
-    // Node* child2_2 = new Node("Child 2.2");
-    // Node* child36 = new Node("right 5");
-
-    // // Add children to Child 2
-    // child2->leftChild = child2_1;
-    // child2->rightChild = child36;
-    // child2_1->sibling = child2_2;
-
-    // // Level 3: Children of Child 1.1
-    // Node* child1_1_1 = new Node("Child 1.1.1");
-    // Node* child1_1_2 = new Node("Child 1.1.2");
-
-    // // Add children to Child 1.1
-    // child1_1->leftChild = child1_1_1;
-    // child1_1->rightChild = child35;
-    // child1_1_1->sibling = child1_1_2;
-
-    // // Level 3: Children of Child 2.1
-    // Node* child2_1_1 = new Node("Child 2.1.1");
-
-    // // Add a child to Child 2.1
-    // child2_1->leftChild = child2_1_1;
-
-    // // Level 3: Sibling of Child 3
-    // Node* child3_1 = new Node("Child 3.1");
-    // Node* child3_2 = new Node("Child 3.2");
-
-    // // Add children to Child 3
-    // child3->leftChild = child3_1;
-    // child3_1->sibling = child3_2;
-
-    // The tree now has greater depth and width for testing
-
 
 
     if (rootNode == nullptr) {
@@ -191,19 +140,18 @@ void MainWindow::onParserButtonClicked()
 
     QGraphicsView *view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
-    view->resize(1200, 800);
+    view->resize(1400, 800);
     view->setWindowTitle("Syntax Tree Viewer");
     view->setFont(QFont("Arial", 30));
 
 
     // Dynamically adjust the scale of the view based on the tree's bounding box
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
-    view->scale(1.5, 1.5);
+    view->scale(2, 2);
 
     view->show();
-}
 
-
+ }
 
 
 void MainWindow::calculateNodePositions(Node* node, int depth, int& xPosition, std::map<Node*, QPointF>& positions, qreal horizontalSpacing) {
@@ -222,9 +170,7 @@ void MainWindow::calculateNodePositions(Node* node, int depth, int& xPosition, s
     // Sibling: Traverse last
     calculateNodePositions(node->sibling, depth, xPosition, positions, horizontalSpacing);
 
-
 }
-
 
 void MainWindow::drawTreeWithPrecomputedPositions(Node* node, const std::map<Node*, QPointF>& positions) {
     if (!node) return;
@@ -233,7 +179,8 @@ void MainWindow::drawTreeWithPrecomputedPositions(Node* node, const std::map<Nod
 
     // Calculate dynamic size based on text
     QString text = QString::fromStdString(node->value);
-    QFontMetrics metrics(scene->font());
+    QFont largeFont("Arial", 14);  // You can adjust the font size here
+    QFontMetrics metrics(largeFont);
     int textWidth = metrics.horizontalAdvance(text) + 20;  // Add padding
     int textHeight = metrics.height() + 10;
 
@@ -245,12 +192,17 @@ void MainWindow::drawTreeWithPrecomputedPositions(Node* node, const std::map<Nod
     if (node->type == "stmt") {
         // Draw a rectangle if node->type == "stmt"
         QGraphicsRectItem* nodeItem = scene->addRect(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
-        scene->addText(text)->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + (nodeHeight - textHeight) / 2);
+        QGraphicsTextItem* textItem = scene->addText(text);
+        textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
+        textItem->setFont(largeFont);  // Set the larger font
     } else {
         // Draw an ellipse for other types
         QGraphicsEllipseItem* nodeItem = scene->addEllipse(currentPos.x(), currentPos.y(), nodeWidth, nodeHeight, QPen(Qt::white));
-        scene->addText(text)->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + (nodeHeight - textHeight) / 2);
+        QGraphicsTextItem* textItem = scene->addText(text);
+        textItem->setPos(currentPos.x() + (nodeWidth - textWidth) / 2, currentPos.y() + 0.5*(nodeHeight - textHeight) / 2);
+        textItem->setFont(largeFont);  // Set the larger font
     }
+
 
     // Draw line to left child
     if (node->leftChild) {
@@ -291,23 +243,78 @@ void MainWindow::drawTree(Node* root, QPointF startPos, qreal horizontalSpacing)
 
 
 
-// void MainWindow::deleteTree(Node* node) {
-//     if (node == nullptr) {
-//         return;  // Base case: If the node is null, do nothing
-//     }
 
-//     // Recursively delete the leftChild and rightChild first
-//     deleteTree(node->leftChild);
-//     deleteTree(node->rightChild);
+void MainWindow::on_CompileButton_clicked()
+{
+    // Placeholder for scanner functionality
+    QString inputText = ui->inputTextEdit->toPlainText();
+    inputText = inputText.trimmed();
+    if (inputText.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Input text is empty.");
+        return;
+    }
 
-//     // Recursively delete the sibling
-//     deleteTree(node->sibling);
+    Scanner scanner(inputText.toStdString());
 
-//     // Delete the current node
-//     delete node;
-// }
+    string tokensList = scanner.GetTokensList();
+    if (tokensList.empty()) {
+        QMessageBox::warning(this, "Error", "No valid tokens found.");
+        return;
+    }
+
+    // Check if the last line contains "invalid symbol"
+    QString tokensListQt = QString::fromStdString(tokensList);
+    // Display tokens list in the output text edit
+    ui->outputTextEdit->setPlainText(tokensListQt);
+
+    QStringList lines = tokensListQt.split("\n", Qt::SkipEmptyParts);
+    if (!lines.isEmpty() && lines.last().trimmed() == "Invalid symbol") {
+        QMessageBox::critical(this, "Error", "Invalid symbol detected in the input.");
+        return;
+    }
 
 
+    Parser parser(tokensList);
+    Node* rootNode = parser.GetSyntaxTree();  // Use rootNode to store the tree*/
 
 
+    if (rootNode == nullptr) {
+        QMessageBox::warning(this, "Error", "Syntax tree could not be generated.");
+        return;
+    }
+
+
+    scene->clear();
+    // drawTree(rootNode, QPointF(400, 0));
+    drawTree(rootNode, QPointF(0, 0), 150.0);
+        // Set a larger, more readable font
+
+    QGraphicsView *view = new QGraphicsView(scene);
+    view->setRenderHint(QPainter::Antialiasing);
+    view->resize(1200, 800);
+    view->setWindowTitle("Syntax Tree Viewer");
+    view->setFont(QFont("Arial", 30));
+
+
+    // Dynamically adjust the scale of the view based on the tree's bounding box
+    view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+    view->scale(1.5, 1.5);
+
+    view->show();
+
+
+    // drawTree(rootNode, QPointF(0, 0), 150.0);
+
+    // // Create a new TreeViewerWindow
+    // TreeViewerWindow *treeWindow = new TreeViewerWindow(this);
+
+    // // Set the scene for the new window
+    // treeWindow->setScene(scene);
+
+
+    // // Show the new window
+    // treeWindow->show();
+
+
+}
 
