@@ -34,16 +34,15 @@ string Parser::GetErrorMessage()
 
 TokenRecord Parser::getNextToken()
 {
-    if(indx < tokens.size())
+    if(indx < tokens.size()+1)
     {
         TokenRecord token = tokens[indx];
         indx++;
         return token;
     }
     TokenRecord token;
-    token.tokenval = ERROR;
-    token.errorMessage = "No more tokens";
-    return token;
+    this->Error = true;
+    this->errorMessage = "Code incomplete";
 }
 
 TokenRecord Parser::readToken(string value, string typeStr)
@@ -206,9 +205,11 @@ Node* Parser::statement()
         temp = writestmt();
         break;
     default:
-        Error = true;
-        errorMessage = "Error: Expected statement but found " + to_string(currentToken.tokenval);
-        break;
+        if (!Error){
+            Error = true;
+            errorMessage = "Error: Expected statement but found " + to_string(currentToken.tokenval);
+            break;
+        }
     }
     return temp;
 }

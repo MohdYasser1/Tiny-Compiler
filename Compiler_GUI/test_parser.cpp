@@ -36,6 +36,11 @@ int main()
     // Get the syntax tree
     Node* syntaxTree = parser.GetSyntaxTree();
 
+    if (syntaxTree == NULL)
+    {
+        cout << parser.GetErrorMessage() << endl;
+        return 1;
+    }
     // Print the syntax tree
     parser.PrintSyntaxTree(syntaxTree, 0);
 

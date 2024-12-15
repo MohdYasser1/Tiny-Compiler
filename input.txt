@@ -6,4 +6,4 @@ if z < 20 then
     write z 
 else
     write 100
-end;
+end
