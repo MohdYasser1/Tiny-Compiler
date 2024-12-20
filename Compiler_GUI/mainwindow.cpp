@@ -148,7 +148,7 @@ void MainWindow::onParserButtonClicked()
 
     // Dynamically adjust the scale of the view based on the tree's bounding box
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
-    view->scale(2, 2);
+    view->scale(2.4, 2.4);
 
     view->show();
 
@@ -187,7 +187,7 @@ void MainWindow::onParserButtonClicked()
 
      // Calculate dynamic size based on text
      QString text = QString::fromStdString(node->value);
-     QFont largeFont("Arial", 14);  // You can adjust the font size here
+     QFont largeFont("Arial", 16);  // You can adjust the font size here
      QFontMetrics metrics(largeFont);
      int textWidth = metrics.horizontalAdvance(text) + 20;  // Add padding
      int textHeight = metrics.height() + 10;
@@ -318,7 +318,7 @@ void MainWindow::on_CompileButton_clicked()
 
     // Dynamically adjust the scale of the view based on the tree's bounding box
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
-    view->scale(1.5, 1.5);
+    view->scale(2.4, 2.4);
 
     view->show();
 
